@@ -3,6 +3,10 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 import os
+from pathlib import Path
+
+# Resolve data path relative to this script — works both locally and on Streamlit Cloud
+BASE_DIR = Path(__file__).resolve().parent
 
 st.set_page_config(page_title="Disaster Pulse | Modern Analytics", layout="wide", page_icon="⚡", initial_sidebar_state="expanded")
 
@@ -134,7 +138,7 @@ st.markdown("""
 # --- Data Loading ---
 @st.cache_data
 def load_data():
-    file_path = "/Users/Agriya/Desktop/spring26/dsm/Assignment 1/task3_4/cleaned_dataset.csv"
+    file_path = BASE_DIR / "cleaned_dataset.csv"
     if not os.path.exists(file_path):
         st.error("Data not found. Please ensure the cleaning script generated standard data.")
         st.stop()
