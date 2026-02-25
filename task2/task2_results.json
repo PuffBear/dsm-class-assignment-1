@@ -1,0 +1,278 @@
+{
+  "2.1_response_delta": [
+    {
+      "event": "Philippines - Historical",
+      "country": "Philippines",
+      "period": "Historical",
+      "alert_date": "18 Aug 2020 00:03 UTC",
+      "peak_news_day": "21/08",
+      "delta_days": 2,
+      "delta_human": "2 days",
+      "total_articles": "5",
+      "peak_articles": "3"
+    },
+    {
+      "event": "Philippines - Recent",
+      "country": "Philippines",
+      "period": "Recent",
+      "alert_date": "30 Sep 2025 13:59 UTC",
+      "peak_news_day": "01/10",
+      "delta_days": 0,
+      "delta_human": "same day",
+      "total_articles": "1684",
+      "peak_articles": "794"
+    },
+    {
+      "event": "Afghanistan - Historical",
+      "country": "Afghanistan",
+      "period": "Historical",
+      "alert_date": "21 Jun 2022 20:54 UTC",
+      "peak_news_day": "22/06",
+      "delta_days": 0,
+      "delta_human": "same day",
+      "total_articles": "1897",
+      "peak_articles": "752"
+    },
+    {
+      "event": "Afghanistan - Recent",
+      "country": "Afghanistan",
+      "period": "Recent",
+      "alert_date": "02 Nov 2025 20:29 UTC",
+      "peak_news_day": "03/11",
+      "delta_days": 0,
+      "delta_human": "same day",
+      "total_articles": "779",
+      "peak_articles": "533"
+    }
+  ],
+  "2.2_entity_recognition": [
+    {
+      "event": "Philippines - Historical",
+      "ngos_found": {
+        "UN": 2
+      },
+      "agencies_found": {
+        "DSWD": 1,
+        "DROMIC": 1,
+        "CBCP": 1
+      },
+      "govts_mentioned": {},
+      "orgs_spacy": {
+        "Un": 2,
+        "Masbate": 2,
+        "de l'Indonésie BFMTV Philippines": 1,
+        "DSWD": 1,
+        "6PM Quake": 1
+      },
+      "persons": {},
+      "death_toll_mentions": [],
+      "injury_mentions": [],
+      "max_stated_death_toll": null,
+      "max_stated_injuries": null,
+      "fund_mentions": [],
+      "max_fund_usd": null,
+      "headline_count": 5
+    },
+    {
+      "event": "Philippines - Recent",
+      "ngos_found": {
+        "UN": 2
+      },
+      "agencies_found": {
+        "Coast Guard": 1
+      },
+      "govts_mentioned": {
+        "Cebu": 2,
+        "Registrado": 2,
+        "Proyecto": 1,
+        "Chile": 1,
+        "Philippines": 1,
+        "Japan": 1
+      },
+      "orgs_spacy": {
+        "terremoto de magnitud": 2,
+        "de Italia": 2,
+        "Iloilo Coast Guard": 1,
+        "Cebu": 1,
+        "DOLE": 1,
+        "el negocio de facturar": 1,
+        "España": 1
+      },
+      "persons": {
+        "Carlo Costanzia": 5,
+        "su madre": 4,
+        "se lavan": 4,
+        "Magnitude 4.5": 1,
+        "para adentro": 1
+      },
+      "death_toll_mentions": [],
+      "injury_mentions": [],
+      "max_stated_death_toll": null,
+      "max_stated_injuries": null,
+      "fund_mentions": [],
+      "max_fund_usd": null,
+      "headline_count": 20
+    },
+    {
+      "event": "Afghanistan - Historical",
+      "ngos_found": {
+        "WHO": 2,
+        "UN": 2
+      },
+      "agencies_found": {},
+      "govts_mentioned": {
+        "Afghanistan": 13,
+        "U.S.": 2,
+        "Kabul": 2,
+        "Dubai": 2,
+        "Paktika": 1,
+        "US": 1,
+        "AfghanistanU.S.": 1,
+        "the United States": 1,
+        "Khost": 1,
+        "The United States": 1
+      },
+      "orgs_spacy": {
+        "UN": 2,
+        "Khost Provinces": 1,
+        "US Pledges": 1,
+        "l'Afghanistan-Blinken": 1,
+        "State": 1,
+        "the Pacific: Weekly": 1,
+        "Additional Funding": 1
+      },
+      "persons": {
+        "Les Etats-Unis": 2,
+        "Antony Blinken": 1,
+        "Aftershock": 1,
+        "Mohammed bin Rashid": 1,
+        "Humanitarian Snapshot": 1
+      },
+      "death_toll_mentions": [
+        1000
+      ],
+      "injury_mentions": [],
+      "max_stated_death_toll": 1000,
+      "max_stated_injuries": null,
+      "fund_mentions": [
+        "$55 Million",
+        "$110 Million",
+        "$110m",
+        "$55 million",
+        "$55 million",
+        "$55",
+        "$55 million",
+        "$55 Million"
+      ],
+      "max_fund_usd": 110000000.0,
+      "headline_count": 20
+    },
+    {
+      "event": "Afghanistan - Recent",
+      "ngos_found": {
+        "UN": 2,
+        "Doctors Without Borders": 2
+      },
+      "agencies_found": {},
+      "govts_mentioned": {
+        "Afghanistan": 7,
+        "Kyrgyz": 2,
+        "Samangan Province": 2,
+        "Damascus": 1,
+        "Sharif": 1,
+        "Superluna": 1,
+        "Pakistan": 1
+      },
+      "orgs_spacy": {
+        "UN": 2,
+        "la più vicina e luminosa": 1
+      },
+      "persons": {
+        "Gang Suspected": 1,
+        "Sopravvissuti al Terremoto": 1,
+        "Samangan Earthquake Victims Call For Immediate Assistance": 1
+      },
+      "death_toll_mentions": [],
+      "injury_mentions": [],
+      "max_stated_death_toll": null,
+      "max_stated_injuries": null,
+      "fund_mentions": [],
+      "max_fund_usd": null,
+      "headline_count": 21
+    }
+  ],
+  "2.3_sentiment": [
+    {
+      "event": "Philippines – Historical",
+      "country": "Philippines",
+      "period": "Historical",
+      "n_headlines": 5,
+      "mean_compound": -0.0636,
+      "std_compound": 0.1273,
+      "min_compound": -0.3182,
+      "max_compound": 0.0,
+      "n_negative": 1,
+      "n_neutral": 4,
+      "n_positive": 0,
+      "alarmism_ratio": 0.0,
+      "tone_label": "neutral / factual",
+      "most_negative_headline": "CBCP readies aid for Masbate quake victims",
+      "most_positive_headline": "Quake-hit Masbate town appeals for aid"
+    },
+    {
+      "event": "Philippines - Recent",
+      "country": "Philippines",
+      "period": "Recent",
+      "n_headlines": 20,
+      "mean_compound": -0.1076,
+      "std_compound": 0.3086,
+      "min_compound": -0.765,
+      "max_compound": 0.4767,
+      "n_negative": 5,
+      "n_neutral": 13,
+      "n_positive": 2,
+      "alarmism_ratio": 0.2,
+      "tone_label": "mildly negative (concern/alarm)",
+      "most_negative_headline": "Death toll in Philippine earthquakes rises to 70, with 559 people injured",
+      "most_positive_headline": "Travel and Tourism in Cebu Impacted by Earthquake Relief Traffic in the Philippi",
+      "delta_vs_historical_mean": -0.044,
+      "delta_vs_historical_alarmism": 0.2
+    },
+    {
+      "event": "Afghanistan – Historical",
+      "country": "Afghanistan",
+      "period": "Historical",
+      "n_headlines": 20,
+      "mean_compound": -0.1368,
+      "std_compound": 0.3197,
+      "min_compound": -0.802,
+      "max_compound": 0.4767,
+      "n_negative": 8,
+      "n_neutral": 10,
+      "n_positive": 2,
+      "alarmism_ratio": 0.15,
+      "tone_label": "mildly negative (concern/alarm)",
+      "most_negative_headline": "Deadly earthquake in Khost and Paktika leaves hundreds killed and thousands injured",
+      "most_positive_headline": "Two Batches of the Chinese Relief Aid Arrive in Afghanistan"
+    },
+    {
+      "event": "Afghanistan - Recent",
+      "country": "Afghanistan",
+      "period": "Recent",
+      "n_headlines": 21,
+      "mean_compound": -0.1194,
+      "std_compound": 0.2346,
+      "min_compound": -0.8126,
+      "max_compound": 0.296,
+      "n_negative": 9,
+      "n_neutral": 9,
+      "n_positive": 3,
+      "alarmism_ratio": 0.0476,
+      "tone_label": "mildly negative (concern/alarm)",
+      "most_negative_headline": "Damascus: Gang Suspected of Islamist Ties Robs and Kills Christian Jeweler",
+      "most_positive_headline": "UAE expresses solidarity with Afghanistan after deadly Mazar-e Sharif quake",
+      "delta_vs_historical_mean": 0.0174,
+      "delta_vs_historical_alarmism": -0.1024
+    }
+  ]
+}
