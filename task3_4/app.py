@@ -158,7 +158,7 @@ def load_data():
     import json
     
     # --- BONUS REAL-TIME DATA INTEGRATION ---
-    # Fetch Real GDP from World Bank JSON API
+    # Fetch Real GDP from JSON API
     def fetch_gdp_billions(country_name):
         iso_map = {'Philippines': 'PHL', 'Afghanistan': 'AFG'}
         iso_code = iso_map.get(country_name, None)
@@ -213,7 +213,7 @@ with st.sidebar:
     menu = st.radio("Navigation", 
                     ["🌍 Global Overview", 
                      "📊 Impact Intel", 
-                     "📈 Trends & Radar", 
+                     "📈 Trends", 
                      "⚡ Predictive Modeling (Bonus)",
                      "📑 Intelligence Brief"],
                     label_visibility="collapsed")
@@ -364,94 +364,49 @@ elif menu == "📊 Impact Intel":
             st.markdown("This metric dynamically extracts the NLP string scraped from GDACS reflecting exactly how many subset articles focus on immediate death/injury.")
             st.markdown("Events mapped with devastating relative vulnerability metrics (like Afghanistan) tend to generate a proportionally **vastly higher ratio** of casualty-focused reporting (>55%), whereas disasters successfully mitigated by infrastructure (Philippines) attract coverage distributed more toward general economic/structural recovery (~33%).")
 
-elif menu == "📈 Trends & Radar":
-    st.markdown("<h1>Trends & Radar</h1>", unsafe_allow_html=True)
+elif menu == "📈 Trends":
+    st.markdown("<h1>Trends</h1>", unsafe_allow_html=True)
     
-    col_t1, col_t2 = st.columns(2)
+    # [4.1] Core Metrics & Media Lag Theory
+    st.markdown("<div class='mission-panel'><b>Media Lifecycle Analysis:</b> Evaluating the response Delta_T. Plotting normalized news drops over time to determine if 'Compassion Fatigue' takes hold faster for recent events compared to historical events.</div>", unsafe_allow_html=True)
     
-    with col_t1:
-        # [4.1] Core Metrics & Media Lag Theory
-        st.markdown("<div class='mission-panel'><b>Media Lifecycle Analysis:</b> Evaluating the response Delta_T. Plotting normalized news drops over time to determine if 'Compassion Fatigue' takes hold faster for recent events compared to historical events.</div>", unsafe_allow_html=True)
-        
-        timeline_data = []
-        for idx, row in df.iterrows():
-            news_str = row['news_per_day']
-            if pd.isna(news_str): continue
-            days = news_str.split(';')
-            for d in days:
-                try:
-                    date_str, count = d.strip().split(':')
-                    timeline_data.append({'Event': row['label'], 'Period': row['period'], 'DateStr': date_str, 'Count': int(count)})
-                except: pass
-                
-        df_timeline_raw = pd.DataFrame(timeline_data)
-        df_timeline_aligned = pd.DataFrame()
-        for event in df_timeline_raw['Event'].unique():
-            subset = df_timeline_raw[df_timeline_raw['Event'] == event].iloc[::-1].reset_index(drop=True)
-            subset['Days_Since'] = subset.index
-            # Normalize to peak=100 for compassion fatigue analysis
-            max_val = subset['Count'].max()
-            if max_val > 0:
-                subset['Fatigue_Ratio'] = subset['Count'] / max_val * 100
-            else:
-                subset['Fatigue_Ratio'] = 0
-            df_timeline_aligned = pd.concat([df_timeline_aligned, subset])
+    timeline_data = []
+    for idx, row in df.iterrows():
+        news_str = row['news_per_day']
+        if pd.isna(news_str): continue
+        days = news_str.split(';')
+        for d in days:
+            try:
+                date_str, count = d.strip().split(':')
+                timeline_data.append({'Event': row['label'], 'Period': row['period'], 'DateStr': date_str, 'Count': int(count)})
+            except: pass
             
-        fig_time = px.line(df_timeline_aligned, x='Days_Since', y='Fatigue_Ratio', color='Event', line_dash="Period",
-                           markers=True, color_discrete_sequence=[COLOR_ORANGE, COLOR_RED, COLOR_GREEN, COLOR_GRAY],
-                           labels={'Fatigue_Ratio': 'Relative Volume (% of Peak)', 'Days_Since': 'Days Elapsed Since Event'})
-                           
-        fig_time.update_layout(
-            paper_bgcolor='rgba(0,0,0,0)', 
-            plot_bgcolor='rgba(0,0,0,0)',
-            font=dict(family='Inter', color=COLOR_DARK),
-            xaxis=dict(showgrid=True, gridcolor='#E5E7EB'),
-            yaxis=dict(showgrid=True, gridcolor='#E5E7EB'),
-            title="Attention Entropy: The 'Media Lag' Theory",
-        )
-        st.plotly_chart(fig_time, use_container_width=True)
+    df_timeline_raw = pd.DataFrame(timeline_data)
+    df_timeline_aligned = pd.DataFrame()
+    for event in df_timeline_raw['Event'].unique():
+        subset = df_timeline_raw[df_timeline_raw['Event'] == event].iloc[::-1].reset_index(drop=True)
+        subset['Days_Since'] = subset.index
+        # Normalize to peak=100 for compassion fatigue analysis
+        max_val = subset['Count'].max()
+        if max_val > 0:
+            subset['Fatigue_Ratio'] = subset['Count'] / max_val * 100
+        else:
+            subset['Fatigue_Ratio'] = 0
+        df_timeline_aligned = pd.concat([df_timeline_aligned, subset])
         
-    with col_t2:
-        st.markdown("<div class='mission-panel'><b>Resilience Radar:</b> A normalized comparative breakdown of core event metrics: Seismic Magnitude, Population Exposure, Media Coverage (Scale), and System Vulnerability.</div>", unsafe_allow_html=True)
-        
-        def normalize(series):
-            return (series - series.min()) / (series.max() - series.min() + 1e-9)
-        
-        df_radar = df_recent.copy()
-        df_radar['Norm_Magnitude'] = normalize(df_radar['magnitude_clean'])
-        df_radar['Norm_Exposure'] = normalize(df_radar['exposed_population_mmi_clean'])
-        df_radar['Norm_Media'] = normalize(df_radar['total_articles'])
-        df_radar['Norm_Vulnerability'] = normalize(df_radar['coping_capacity_clean'])
-        
-        categories = ['Magnitude', 'Exposure', 'Total Media', 'Fragility']
-        fig_radar = go.Figure()
-        
-        fill_colors = ['rgba(245, 158, 11, 0.2)', 'rgba(239, 68, 68, 0.2)']
-        line_colors = [COLOR_ORANGE, COLOR_RED]
-        
-        for idx, (i, row) in enumerate(df_radar.iterrows()):
-            fig_radar.add_trace(go.Scatterpolar(
-                r=[row['Norm_Magnitude'], row['Norm_Exposure'], row['Norm_Media'], row['Norm_Vulnerability']],
-                theta=categories,
-                fill='toself',
-                name=row['country'],
-                fillcolor=fill_colors[idx%2],
-                line=dict(color=line_colors[idx%2], width=2)
-            ))
-            
-        fig_radar.update_layout(
-            polar=dict(
-                radialaxis=dict(visible=False, range=[0, 1]), 
-                bgcolor='rgba(0,0,0,0)'
-            ),
-            paper_bgcolor='rgba(0,0,0,0)',
-            font=dict(family='Inter', color=COLOR_DARK),
-            showlegend=True,
-            legend=dict(orientation="h", yanchor="bottom", y=-0.2, xanchor="center", x=0.5),
-            margin=dict(t=40, b=40, l=40, r=40),
-            title="Symmetrical Resilience Output"
-        )
-        st.plotly_chart(fig_radar, use_container_width=True)
+    fig_time = px.line(df_timeline_aligned, x='Days_Since', y='Fatigue_Ratio', color='Event', line_dash="Period",
+                       markers=True, color_discrete_sequence=[COLOR_ORANGE, COLOR_RED, COLOR_GREEN, COLOR_GRAY],
+                       labels={'Fatigue_Ratio': 'Relative Volume (% of Peak)', 'Days_Since': 'Days Elapsed Since Event'})
+                       
+    fig_time.update_layout(
+        paper_bgcolor='rgba(0,0,0,0)', 
+        plot_bgcolor='rgba(0,0,0,0)',
+        font=dict(family='Inter', color=COLOR_DARK),
+        xaxis=dict(showgrid=True, gridcolor='#E5E7EB'),
+        yaxis=dict(showgrid=True, gridcolor='#E5E7EB'),
+        title="Attention Entropy: The 'Media Lag' Theory",
+    )
+    st.plotly_chart(fig_time, use_container_width=True)
 
 elif menu == "⚡ Predictive Modeling (Bonus)":
     st.markdown("<h1>Predictive Modeling & Integrated Data</h1>", unsafe_allow_html=True)
@@ -462,7 +417,7 @@ elif menu == "⚡ Predictive Modeling (Bonus)":
     <div style='background-color: #F8FAFC; border: 1px solid #E2E8F0; padding: 12px 16px; border-radius: 6px; margin-bottom: 24px; font-size: 0.9em; color: #475569;'>
         <b style='color: #0F172A;'>⚠️ Data Sourcing Disclaimer:</b> This demonstration utilizes a hybrid data approach:
         <ul style='margin-top: 8px; margin-bottom: 0; padding-left: 20px;'>
-            <li><b>Real-Time Data:</b> GDP metrics are fetched dynamically via live HTTP requests to the <i>World Bank Public API</i>.</li>
+            <li><b>Real-Time Data:</b> GDP metrics are fetched dynamically via live HTTP requests.</li>
             <li><b>Simulated Data:</b> Emergency Relief Funds and Social Sentiment indices are mock-injected to demonstrate predictive capability mapping without requiring authenticated private UN/Social Media API keys.</li>
         </ul>
     </div>
